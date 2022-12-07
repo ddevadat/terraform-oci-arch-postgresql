@@ -28,6 +28,7 @@ if [[ $(uname -r | sed 's/^.*\(el[0-9]\+\).*$/\1/') == "el7" ]]
     fi  
 fi
 
+
 echo '--> Install PostgreSQL Server...'
 if [[ $(uname -r | sed 's/^.*\(el[0-9]\+\).*$/\1/') == "el7" ]]
 then 
@@ -36,9 +37,12 @@ fi
 if [[ $(uname -r | sed 's/^.*\(el[0-9]\+\).*$/\1/') == "el8" ]]
 then 
     sudo dnf -qy module disable postgresql
-    sudo dnf install -y postgresql${pg_version_no_dot}-server
+    sudo dnf module enable postgresql:${pg_version_no_dot}
+    sudo dnf install -y postgresql-server
 fi
 echo '-[100%]-> Install PostgreSQL Server (postgresql${pg_version_no_dot}-server) installed.'
+
+sudo yum update -y
 
 echo '--> Install PostgreSQL pg_basebackup utility...'
 if [[ $(uname -r | sed 's/^.*\(el[0-9]\+\).*$/\1/') == "el7" ]]
